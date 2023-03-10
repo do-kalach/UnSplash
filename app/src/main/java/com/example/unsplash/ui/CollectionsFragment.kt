@@ -1,5 +1,6 @@
 package com.example.unsplash.ui
 
+import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -8,7 +9,10 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.findNavController
+import androidx.navigation.fragment.findNavController
 import com.example.unsplash.MainViewModel
+import com.example.unsplash.R
 import com.example.unsplash.databinding.FragmentCollectionsBinding
 import com.example.unsplash.domain.CollectionsAdapter
 import kotlinx.coroutines.flow.collectLatest
@@ -28,8 +32,12 @@ class CollectionsFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        val adapter = CollectionsAdapter{
-            Toast.makeText(requireContext(), it, Toast.LENGTH_SHORT).show()
+        val adapter = CollectionsAdapter {
+            val path = Uri.parse(it).pathSegments[1]
+            val title = Uri.parse(it).pathSegments[0]
+            findNavController().navigate(
+                MainFragmentDirections.actionMainFragmentToCurrentCollectionFragment(path, title)
+            )
         }
         binding.recyclerView.adapter = adapter
         lifecycleScope.launch {

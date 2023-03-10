@@ -5,6 +5,7 @@ import com.example.unsplash.data.model.PhotosItem
 import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Headers
+import retrofit2.http.Path
 import retrofit2.http.Query
 
 interface Api {
@@ -19,5 +20,9 @@ interface Api {
         @Query("page") page: Int,
         @Query("per_page") per_page: Int
     ): Response<List<CollectionsItem>>
+
+    @Headers("Authorization: Client-ID E7gzCjdD75eBEZ9lWXs45-VhoIXvbfYbwPva3PUyzps")
+    @GET("collections/{collection}/photos")
+    suspend fun getCurrentCollections(@Path("collection") collection: String): Response<List<PhotosItem>>
 
 }

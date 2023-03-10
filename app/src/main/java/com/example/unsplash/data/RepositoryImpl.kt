@@ -25,4 +25,14 @@ class RepositoryImpl @Inject constructor(private val api: Api) {
     suspend fun getCollection(page: Int, perPage: Int): Response<List<CollectionsItem>> {
         return api.getCollections(page, perPage)
     }
+
+    suspend fun getCurrentCollections(collection: String): Flow<ResultOf<List<PhotosItem>>> {
+        return return flow {
+            try {
+                emit(ResultOf.Success(api.getCurrentCollections(collection).body()!!))
+            } catch (e: HttpException) {
+                emit(ResultOf.Failure(e))
+            }
+        }
+    }
 }

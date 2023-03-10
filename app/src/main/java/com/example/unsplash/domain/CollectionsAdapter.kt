@@ -34,7 +34,7 @@ class CollectionsAdapter(private val onClickListener: OnClickListener) :
                 onClickListener.invoke(item.links.photos)
             }
             binding.nameCollection.text = item.user.name
-            binding.sumPhotos.text = item.total_photos.toString()
+            binding.sumPhotos.text = "${item.total_photos.toString()} Photos"
             binding.descriptionCollection.text = item.title
             binding.author.load(item.user.profile_image.medium) {
                 crossfade(true)

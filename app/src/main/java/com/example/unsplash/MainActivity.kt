@@ -3,9 +3,9 @@ package com.example.unsplash
 import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.navigation.NavController
+import androidx.navigation.fragment.NavHostFragment
 import com.example.unsplash.databinding.ActivityMainBinding
-import com.example.unsplash.ui.StateAdapter
-import com.google.android.material.tabs.TabLayoutMediator
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -14,6 +14,8 @@ class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
 
     private val viewModel by viewModels<MainViewModel>()
+    private var navHostFragment: NavHostFragment? = null
+    private var navController: NavController? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -21,16 +23,9 @@ class MainActivity : AppCompatActivity() {
             setContentView(it.root)
         }
 
-        val adapter = StateAdapter(supportFragmentManager, lifecycle)
-
-        binding.pager.adapter = adapter
-
-        TabLayoutMediator(binding.tabLayout, binding.pager) { tab, position ->
-            when (position) {
-                0 -> tab.text = "Home"
-                1->tab.text = "Collection"
-            }
-        }.attach()
+        navHostFragment =
+            supportFragmentManager.findFragmentById(R.id.fragmentContainerView) as NavHostFragment
+        navController = navHostFragment!!.navController
 
     }
 }

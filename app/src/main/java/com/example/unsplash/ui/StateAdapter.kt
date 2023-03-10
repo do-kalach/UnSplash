@@ -7,7 +7,6 @@ import androidx.viewpager2.adapter.FragmentStateAdapter
 
 class StateAdapter(fm: FragmentManager, lifecycle: Lifecycle) :
     FragmentStateAdapter(fm, lifecycle) {
-
     override fun getItemCount(): Int {
         return 2
     }
